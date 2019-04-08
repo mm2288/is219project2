@@ -31,6 +31,20 @@ function animate() {
 }
 
 /************* DO NOT TOUCH CODE ABOVE THIS LINE ***************/
+
+//GET request
+function getQueryParams(qs) {
+  qs = qs.split("+").join(" ");
+  var params = {}, tokens, re = /[?&]?([^=]+)=([^&]*)/g;
+  while (tokens = re.exec(qs)) {
+   params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
+  }
+  return params;
+}
+var $_GET = getQueryParams(document.location.search);
+//console.log($_GET["images.json"]); // would output "John"
+
+
 var lastImg = false;
 // Counter for the mImages array
 var mCurrentIndex = 0;
@@ -82,41 +96,45 @@ function imgDetails(){
 
 //Moves forward through images when button is clicked
 function forward(){
-        $('#nextPhoto').click(function(){
-                prevClicked=false;
-        if(mCurrentIndex === mImages.length - 1){
-            mCurrentIndex = 0;
-            photoDisplayed();
-            mLastFrameTime = 0;
-
-        } else{
-            mCurrentIndex++;
-            photoDisplayed();
-            mLastFrameTime = 0;
-        }
-    });
+  $('#nextPhoto').click(function(){
+    prevClicked=false;
+    if(mCurrentIndex === mImages.length - 1){
+      mCurrentIndex = 0;
+      photoDisplayed();
+      mLastFrameTime = 0;
+      } else {
+        mCurrentIndex++;
+        photoDisplayed();
+        mLastFrameTime = 0;
+      }
+  });
 };
 //Moves backward through images when button is clicked
 var clicked = false;
 function backward(){
-        $('#prevPhoto').click(function(){
-            clicked = true;
-        if(mCurrentIndex === 0){
-            mCurrentIndex = mImages.length - 1;
-            photoDisplayed();
-            mLastFrameTime = 0;
-
-        } else{
-            mCurrentIndex--;
-            photoDisplayed();
-            mLastFrameTime = 0;
-        }
-    });
+  $('#prevPhoto').click(function(){
+  clicked = true;
+  if(mCurrentIndex === 0){
+    mCurrentIndex = mImages.length - 1;
+    photoDisplayed();
+    mLastFrameTime = 0;
+    } else {
+      mCurrentIndex--;
+      photoDisplayed();
+      mLastFrameTime = 0;
+      }
+  });
 };
-
 
 // XMLHttpRequest
 var mURL = "images.json";
+if ($_GET['json'] == undefined){
+  mURL = "images.json";
+} else {
+  mURL = $_GET['json'];
+}
+
+
 var mRequest = new XMLHttpRequest();
 mRequest.onreadystatechange = function() {
   // Do something interesting if file is opened successfully
