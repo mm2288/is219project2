@@ -31,14 +31,38 @@ function animate() {
 }
 
 /************* DO NOT TOUCH CODE ABOVE THIS LINE ***************/
+var lastImg = false;
+var mCurrentIndex = 0;
 
+//Calls photoDisplayed to swap the image displayed
+//mCurrentIndex iterates through the images and sets the index
 function swapPhoto() {
 	//Add code here to access the #slideShow element.
 	//Access the img element and replace its source
 	//with a new image from your images array which is loaded
 	//from the JSON string
-
-
+  if (lastImg) {
+    if (mCurrentIndex > 0) {
+      mCurrentIndex--;
+    } else {
+      mCurrentIndex = mImages.length - 1;
+    };
+  } else {
+    if (mCurrentIndex < mImages.length - 1) {
+      mCurrentIndex++;
+    } else {
+      mCurrentIndex = 0;
+    };
+  };
+  photoDisplayed();
+};
+//Changes the photo that is displayed
+function photoDisplayed() {
+  $('#photo').attr("src", mImages[mCurrentIndex].location);
+  $('.location').text('Location: ' + mImages[mCurrentIndex].image);
+  $('.description').text('Description: ' + mImages[mCurrentIndex].description);
+  $('.date').text('Date: ' + mImages[mCurrentIndex].date);
+}
 
 // Counter for the mImages array
 
@@ -56,10 +80,10 @@ mRequest.onreadystatechange = function() {
     //Pushes the metadata and URLs into mImages
     for (var i = 0; i < mJson.images.length; i++) {
       var path = mJson.images[i].imgPath;
-      var loc = mJson.images[i].imgLocation;
-      var des = mJson.images[i].description;
-      var da = mJson.images[i].date;
-      mImages.push(new GalleryImage(location, description, date, photo));
+      var location = mJson.images[i].imgLocation;
+      var description = mJson.images[i].description;
+      var date = mJson.images[i].date;
+      mImages.push(new GalleryImage(path, location, description, date));
     }
     // Let’s print out the JSON; It will likely show as "obj"
     console.log(mJson);
@@ -105,11 +129,11 @@ window.addEventListener('load', function() {
 }, false);
 
 // Object to hold image's data (location, description, date, and photo)
-function GalleryImage(location, description, date, photo) {
-  this.location = location;
-  this.description = description;
-  this.date = date;
-  this.img = photo;
+function GalleryImage(loc, desc, da, pho) {
+  this.location = loc;
+  this.description = desc;
+  this.date = da;
+  this.image = pho;
 	//implement me as an object to hold the following data about an image:
 	//1. location where photo was taken
 	//2. description of photo
