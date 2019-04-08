@@ -32,6 +32,7 @@ function animate() {
 
 /************* DO NOT TOUCH CODE ABOVE THIS LINE ***************/
 var lastImg = false;
+// Counter for the mImages array
 var mCurrentIndex = 0;
 
 //Calls photoDisplayed to swap the image displayed
@@ -64,12 +65,59 @@ function photoDisplayed() {
   $('.date').text('Date: ' + mImages[mCurrentIndex].date);
 }
 
-// Counter for the mImages array
+function imgDetails(){
+    $('.moreIndicator').click(function(){
+        console.log(mCurrentIndex);
+        if( $('.moreIndicator').hasClass('rot90')){
+            $('.details').slideDown();
+            $('.moreIndicator').removeClass('rot90');
+            $('.moreIndicator').addClass('rot270');
+        } else{
+            $('.details').slideUp();
+            $('.moreIndicator').removeClass('rot270');
+            $('.moreIndicator').addClass('rot90');
+        }
+    });
+};
+
+//Moves forward through images when button is clicked
+function forward(){
+        $('#nextPhoto').click(function(){
+                prevClicked=false;
+        if(mCurrentIndex === mImages.length - 1){
+            mCurrentIndex = 0;
+            photoDisplayed();
+            mLastFrameTime = 0;
+
+        } else{
+            mCurrentIndex++;
+            photoDisplayed();
+            mLastFrameTime = 0;
+        }
+    });
+};
+//Moves backward through images when button is clicked
+var clicked = false;
+function backward(){
+        $('#prevPhoto').click(function(){
+            clicked = true;
+        if(mCurrentIndex === 0){
+            mCurrentIndex = mImages.length - 1;
+            photoDisplayed();
+            mLastFrameTime = 0;
+
+        } else{
+            mCurrentIndex--;
+            photoDisplayed();
+            mLastFrameTime = 0;
+        }
+    });
+};
+
 
 // XMLHttpRequest
 var mURL = "images.json";
 var mRequest = new XMLHttpRequest();
-var mImages = [];
 mRequest.onreadystatechange = function() {
   // Do something interesting if file is opened successfully
   if (mRequest.readyState == 4 && mRequest.status == 200) {
@@ -101,11 +149,6 @@ var mImages = [];
 // Holds the retrived JSON information
 var mJson;
 
-// URL for the JSON to load by default
-// Some options for you are: images.json, images.short.json; you will need to create your own extra.json later
-var mUrl = 'insert_url_here_to_image_json';
-
-
 //You can optionally use the following function as your event callback for loading the source of Images from your json data (for HTMLImageObject).
 //@param A GalleryImage object. Use this method for an event handler for loading a gallery Image object (optional).
 function makeGalleryImageOnloadCallback(galleryImage) {
@@ -116,10 +159,12 @@ function makeGalleryImageOnloadCallback(galleryImage) {
 }
 
 $(document).ready( function() {
-
 	// This initially hides the photos' metadata information
+  //When the buttons are clicked, they will go backwards and forwards
 	$('.details').eq(0).hide();
-
+  imgDetails();
+  forward();
+  backward();
 });
 
 window.addEventListener('load', function() {
