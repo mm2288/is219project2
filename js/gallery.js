@@ -1,15 +1,15 @@
 // requestAnim shim layer by Paul Irish
     window.requestAnimFrame = (function(){
-      return  window.requestAnimationFrame       || 
-              window.webkitRequestAnimationFrame || 
-              window.mozRequestAnimationFrame    || 
-              window.oRequestAnimationFrame      || 
-              window.msRequestAnimationFrame     || 
+      return  window.requestAnimationFrame       ||
+              window.webkitRequestAnimationFrame ||
+              window.mozRequestAnimationFrame    ||
+              window.oRequestAnimationFrame      ||
+              window.msRequestAnimationFrame     ||
               function(/* function */ callback, /* DOMElement */ element){
                 window.setTimeout(callback, 1000 / 60);
               };
     })();
-  
+
 
 // example code from mr doob : http://mrdoob.com/lab/javascript/requestanimationframe/
 
@@ -35,16 +35,31 @@ function animate() {
 function swapPhoto() {
 	//Add code here to access the #slideShow element.
 	//Access the img element and replace its source
-	//with a new image from your images array which is loaded 
+	//with a new image from your images array which is loaded
 	//from the JSON string
-	console.log('swap photo');
-}
+
+
 
 // Counter for the mImages array
-var mCurrentIndex = 0;
 
-// XMLHttpRequest variable
+// XMLHttpRequest
+var mURL = "images.json";
 var mRequest = new XMLHttpRequest();
+mRequest.onreadystatechange = function() {
+  // Do something interesting if file is opened successfully
+  if (mRequest.readyState == 4 && mRequest.status == 200) {
+    try {
+    // Let’s try and see if we can parse JSON
+    mJson = JSON.parse(mRequest.responseText);
+    // Let’s print out the JSON; It will likely show as "obj"
+    console.log(mJson);
+    } catch(err) {
+    console.log(err.message)
+    }
+  }
+};
+mRequest.open("GET",mURL, true);
+mRequest.send();
 
 // Array holding GalleryImage objects (see below).
 var mImages = [];
@@ -67,19 +82,24 @@ function makeGalleryImageOnloadCallback(galleryImage) {
 }
 
 $(document).ready( function() {
-	
+
 	// This initially hides the photos' metadata information
 	$('.details').eq(0).hide();
-	
+
 });
 
 window.addEventListener('load', function() {
-	
+
 	console.log('window loaded');
 
 }, false);
 
-function GalleryImage() {
+// Object to hold image's data (location, description, date, and photo)
+function GalleryImage(location, description, date, photo) {
+  this.location = location;
+  this.description = description;
+  this.date = date;
+  this.img = photo;
 	//implement me as an object to hold the following data about an image:
 	//1. location where photo was taken
 	//2. description of photo
