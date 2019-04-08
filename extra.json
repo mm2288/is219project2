@@ -1,0 +1,40 @@
+{
+    "images": [
+        {
+            "imgPath": "img/myplaces/aruba.jpg",
+            "imgLocation": "Aruba",
+            "description": "View on the beach",
+            "date": "Summer 2015"
+        },
+        {
+            "imgPath": "img/myplaces/disney.jpg",
+            "imgLocation": "Magic Kingdom, Walt Disney World",
+            "description": "Fireworks in Magic Kingdom",
+            "date": "Summer 2017"
+        },
+        {
+            "imgPath": "img/myplaces/hershey.jpg",
+            "imgLocation": "HersheyPark, Pennsylvania",
+            "description": "The ferris wheel at HersheyPark",
+            "date": "Summer 2016"
+        },
+        {
+            "imgPath": "img/myplaces/hollywood.jpg",
+            "imgLocation": "Hollywood, California",
+            "description": "Hollywood sign in California",
+            "date": "Summer 2016"
+        },
+        {
+            "imgPath": "img/myplaces/rhodeisland.jpg",
+            "imgLocation": "Newport, Rhode Island",
+            "description": "Coast of RhodeIsland",
+            "date": "Spring 2017"
+        },
+        {
+            "imgPath": "img/myplaces/santamonica.jpg",
+            "imgLocation": "Santa Monica, California",
+            "description": "Picture from the pier in California",
+            "date": "Summer 2016"
+        }
+  ]
+}
