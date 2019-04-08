@@ -30,12 +30,15 @@ body {
 	position: absolute;
 	z-index: 3;
 	opacity: .8;
-	top: 0px;
+	left: 315px;
+	top: 330px;
 }
 
 .thumbnail {
 	position: relative;
 	box-shadow: 1px 3px 20px 0px;
+	width: 518px;
+	height: 389px;
 }
 
 
@@ -54,14 +57,24 @@ body {
 	width: 42px;
 }
 
+#prevPhoto:hover {
+	opacity: .8;
+}
+
 #nextPhoto {
 	height: 42px;
 	width: 42px;
+	float: right;
+}
+
+#nextPhoto:hover {
+	opacity: .8;
 }
 
 .details p {
 	margin-top: 20px;
 }
+
 .details {
 	border: 1px #000 dashed;
 	padding: 0px 10px;
@@ -100,6 +113,18 @@ Make it animate nicely. You'll need CSS3 for this*/
 	-o-transform: rotate(270deg);
 	-ms-transform: rotate(270deg);
 	transform: rotate(270deg);
+	-moz-transition: all 1s ease;
+	-webkit-transition: all 1s ease;
+	-o-transition: all 1s ease;
+	transition: all 1s ease;
+}
+
+.moreIndicator rot90 {
+	-webkit-transform: rotate(90deg);
+	-moz-transform: rotate(90deg);
+	-o-transform: rotate(90deg);
+	-ms-transform: rotate(90deg);
+	transform: rotate(90deg);
 	-moz-transition: all 1s ease;
 	-webkit-transition: all 1s ease;
 	-o-transition: all 1s ease;
