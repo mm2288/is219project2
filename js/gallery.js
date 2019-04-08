@@ -45,12 +45,22 @@ function swapPhoto() {
 // XMLHttpRequest
 var mURL = "images.json";
 var mRequest = new XMLHttpRequest();
+var mImages = [];
 mRequest.onreadystatechange = function() {
   // Do something interesting if file is opened successfully
   if (mRequest.readyState == 4 && mRequest.status == 200) {
     try {
     // Let’s try and see if we can parse JSON
     mJson = JSON.parse(mRequest.responseText);
+    //JS Object to retrieve JSON photo URLs and metadata
+    //Pushes the metadata and URLs into mImages
+    for (var i = 0; i < mJson.images.length; i++) {
+      var path = mJson.images[i].imgPath;
+      var loc = mJson.images[i].imgLocation;
+      var des = mJson.images[i].description;
+      var da = mJson.images[i].date;
+      mImages.push(new GalleryImage(location, description, date, photo));
+    }
     // Let’s print out the JSON; It will likely show as "obj"
     console.log(mJson);
     } catch(err) {
